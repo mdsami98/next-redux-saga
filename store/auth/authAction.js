@@ -1,5 +1,6 @@
+import * as ACTION from './authActionType.js'
 export const loginAction = (payload=null, callback) => ({
-    type: 'LOGIN',
+    type: ACTION.LOGIN_SUBMIT,
     payload,
     callback
 });

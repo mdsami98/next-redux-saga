@@ -1,10 +1,17 @@
 /* eslint-disable no-console */
-import { all, call, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
+import * as ACTION from './authActionType.js'
 
 
 function* logoutSaga(action) {
     try {
-        console.log('kkkk')
+        setTimeout(() => {
+            alert('fff')
+             put({
+                type: ACTION.LOGIN_SUCCESS,
+                payload: []
+            });
+        }, 1000);
     } catch (error) {
         console.log(error);
     }
