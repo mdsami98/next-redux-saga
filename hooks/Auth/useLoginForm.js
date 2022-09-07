@@ -1,31 +1,35 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { loginAction } from "../../store/auth/authAction"
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from "react-hook-form";
-import {authData} from '../../store/auth/authReducer'
+  
+import { loginSubmitAction } from "../../store/auth/authAction";
+import { useRouter } from "next/router";
 const schema = yup.object({
   email: yup.string().email().required(),
   password: yup.string().required(),
 }).required();
 
-const useLoginForm = (user, login) => {
-    const authState = useSelector(authData)
+const useLoginForm = () => {
+  const router = useRouter()
+  const authState = useSelector((state)=>state.auth)
+  console.log(authState);
     const dispatch = useDispatch()
-    const [loading, setLoading]= useState(true)
     const { register, handleSubmit, formState:{ errors } } = useForm({
       resolver: yupResolver(schema)
     });
     const onSubmit = data => {
-      dispatch(loginAction())
+      dispatch(loginSubmitAction(data))
     };
 
-    useEffect(()=> {
-      setLoading(authState.isLoading)
-    }, [authState.isLoading])
-      
+    useEffect(()=>{
+      if(authState.login){
+        router.push('/');
+      }
+    }, [authState.login])
     
+   const loading = authState.loading;
     return {
       loading,
       register,
