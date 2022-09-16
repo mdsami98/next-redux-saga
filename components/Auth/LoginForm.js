@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import useLoginForm from "../../hooks/Auth/useLoginForm";
+import { useDispatch, useSelector } from "react-redux"
+import { useRouter } from "next/router";
+import { clearRedirect } from "../../store/auth/authReducer";
 
 
 const LoginForm = (props) => {
   const { loading, register, handleSubmit, onSubmit, errors } = useLoginForm();
+
+  const authState = useSelector((state)=>state.auth)
+  const router = useRouter()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!authState.initialization) {
+      if (authState.user) {
+        // const redirect = authState.redirectUrl;
+        router.push("/index") // go to default protected page
+
+      }
+    }
+  }, [])
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -30,7 +48,6 @@ const LoginForm = (props) => {
             >
               <div>
                 <label
-                  for="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Your email
@@ -48,7 +65,6 @@ const LoginForm = (props) => {
               </div>
               <div>
                 <label
-                  for="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Password 
@@ -68,13 +84,13 @@ const LoginForm = (props) => {
               <button
                 disabled={loading}
                 type="submit"
-                class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
                 {
                   loading ? (<>
                   <svg
                     role="status"
-                    class="inline mr-3 w-4 h-4 text-white animate-spin"
+                    className="inline mr-3 w-4 h-4 text-white animate-spin"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

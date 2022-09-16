@@ -14,7 +14,7 @@ const schema = yup.object({
 const useLoginForm = () => {
   const router = useRouter()
   const authState = useSelector((state)=>state.auth)
-  console.log(authState);
+
     const dispatch = useDispatch()
     const { register, handleSubmit, formState:{ errors } } = useForm({
       resolver: yupResolver(schema)

@@ -6,7 +6,7 @@ import * as ACTION from './authActionType.js'
 function* logoutSaga(action) {
     try {
         setTimeout(() => {
-            alert('fff')
+            
              put({
                 type: ACTION.LOGIN_SUCCESS,
                 payload: []

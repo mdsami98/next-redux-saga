@@ -324,3 +324,6 @@ const Index = () => {
 };
 export default Index;
 
+Index.requireAuth = true
+
+

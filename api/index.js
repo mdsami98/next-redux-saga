@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-// import { getCookie } from "../helpers/Cookie";
+import { getCookie } from 'cookies-next';
 
 export const sendRequest = (method, url, payload = [], config = []) => {
     try{
@@ -29,24 +29,26 @@ export const sendRequest = (method, url, payload = [], config = []) => {
     }  
 };
 
-// export const sendRequestWithTokenAndError = (method, url, payload = [], config = []) => {
-//     const bearerToken = getCookie(process.env.REACT_APP_ACCESS_TOKEN);
-//     const request = axios({
-//         url,
-//         headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${bearerToken}`
-//         },
-//         method,
-//         data: payload,
-//         responseType: "json"
-//     });
+export const sendRequestWithTokenAndError = (method, url, payload = [], config = []) => {
+    const bearerToken = getCookie('token');
+    console.log(bearerToken);
+    const request = axios({
+        url,
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${bearerToken}`
+        },
+        method,
+        data: payload,
+        responseType: "json"
+    });
 
-//     return request
-//         .then((res) => {
-//             return res;
-//         })
-//         .catch((error) => {
-//             return error.response.message;
-//         });
-// };
+    return request
+        .then((res) => {
+            return res;
+        })
+        .catch((error) => {
+            return error.response.data;
+
+        });
+};
